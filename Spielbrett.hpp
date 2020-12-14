@@ -45,7 +45,7 @@ class Spielbrett {
             width = 500; 
             height = 500;
             feldArrayInitialisieren();
-            buildBrett();
+           // buildBrett();
             spielerInitialisieren();
             straßenInitialisieren();
             }
@@ -108,28 +108,35 @@ class Spielbrett {
             }
     
         void straßenInitialisieren(){
+            //x und Y Koordinaten 
+            int koord[12][2] ={{0,0}, {0,100},{0,200},{0,300},{100,300},{200,300},{300,300},{300,200},{300,100},{300,0},{200,0},{100,0}};
+           
             //Mein Spielbrett ist gerade nur 12 groß...
             string namen[12] = {"OLD KENT ROAD", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
                          "EUSTON ROAD", "PENTONVILLE ROAD", "PALL MALL", 
                          "WHITEHALL", "FLEET STREET", "LEICESTER SQUARE", 
                          "PICADILLY ROAD", "OXFORD STREET", "BOND STREET"};
             int len = 12;
-            Straße *zeiger=nullptr;
+            Straße *straßenZeiger=nullptr;
             int miete = 10;
             for(int i = 0; i < 12; i++){
                 //i als Argument entspricht der Feldposition
-                zeiger = new Straße(namen[i], miete);
+                straßenZeiger = new Straße(namen[i], miete);
+                Rect *r2= new Rect(koord[i][0],koord[i][1],100,100,brett);
+                r2->setFill("transparent");
+                straßenZeiger -> setRect(r2);
                 miete= miete +5;
-                straßen[i] = zeiger;
+                straßen[i] = straßenZeiger;
             }
         }
       
         //hier drin die Positionen der Straßen und Spieler setzen!
-        void buildBrett(){   
-            for(int i= 0; i < 12; i++){
-                brett->drawRect(feld[i][0], feld[i][1], 100,100);
-            }
-        }
+    //Brauchen wir nicht mehr wegen den Rects :)
+//         void buildBrett(){   
+//             for(int i= 0; i < 12; i++){
+//                 brett->drawRect(feld[i][0], feld[i][1], 100,100);
+//             }
+//         }
     
         // Methode besser in Klasse Spieler
         int wuerfeln(){

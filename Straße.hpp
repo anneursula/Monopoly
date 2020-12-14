@@ -17,6 +17,8 @@ class Straße {
         int posX; 
         int posY;
         string color; 
+    
+        Rect *r = nullptr;
         
     
     public:    
@@ -42,6 +44,15 @@ class Straße {
             color = "black";
 
         }    
+    
+    
+        void setRect(Rect *r2){
+            this -> r = r2;
+        }
+    
+        Rect* getRect(){
+            return r;
+        }
     
         void setColor(string color){
             this->color = color; 
