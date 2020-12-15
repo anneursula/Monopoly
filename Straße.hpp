@@ -42,9 +42,7 @@ class Straße {
             verkauft = false; 
             Hypothek = false; 
             color = "black";
-
-        }    
-    
+        }
     
         void setRect(Rect *r2){
             this -> r = r2;

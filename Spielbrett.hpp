@@ -30,8 +30,8 @@ class Spielbrett {
             height = 500;
             feldArrayInitialisieren();
            // buildBrett();
-            spielerInitialisieren();
             straßenInitialisieren();
+            spielerInitialisieren();
             }
     
         int getWidth(){
@@ -84,7 +84,9 @@ class Spielbrett {
                 for(int i = 0; i <anzahl;i++){
                     string s = "Spieler_" + to_string(i);
                     spielerZeiger = new Spieler(s);
-                    Circle *c2 = new Circle(10 + 10 * i,10,5,brett);
+                    Circle *c2 = new Circle(10 + 15 * i,10,10,brett);
+                    spielerZeiger->setColor();
+                    c2->setFill(spielerZeiger->getColor()[0], spielerZeiger->getColor()[1],spielerZeiger->getColor()[2]);
                     spielerZeiger -> setCircle(c2);
                     spieler.push_front(spielerZeiger);
                     
@@ -107,7 +109,7 @@ class Spielbrett {
                 //i als Argument entspricht der Feldposition
                 straßenZeiger = new Straße(namen[i], miete);
                 Rect *r2= new Rect(koord[i][0],koord[i][1],100,100,brett);
-                r2->setFill("transparent");
+                r2->setFill("green");
                 straßenZeiger -> setRect(r2);
                 miete= miete +5;
                 straßen[i] = straßenZeiger;
@@ -134,7 +136,7 @@ class Spielbrett {
             int y = feld[neuesFeld][1];
             Circle *c = spieler.getCircle();
             //bewegt Spieler (als Circle) zu neuen Koordinaten. Ist noch nicht so schön weil auf Linie).
-            c->moveTo(x+50,y+50);
+            c->moveTo(x + 50 + rand()%20 + 1, y + 50 + rand()%20 + 1);
         }
         
         

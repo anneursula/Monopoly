@@ -1,6 +1,4 @@
-// #include <algoviz/SVG.hpp> brauche ich glaub nicht.
 #include "Straße.hpp"
-//#include "Spielbrett.hpp"
 #include <iostream>
 using namespace std;
 
@@ -11,6 +9,7 @@ class Spieler{
     double kapital;
     list<Straße> straßen; //sollte dass dann auch eine Pointer list sein? Glaube schon :D 
     int feldPos;
+    array <int, 3> colors = {0,0,0}; 
     
     //die Form auf dem Spielfeld
     Circle *c = nullptr;
@@ -21,6 +20,21 @@ class Spieler{
         kapital = 400; //Welcher Betrag??
         feldPos = 0;
     }
+    
+    void setName(string name){
+        this->name = name; 
+    }
+    
+    void setColor(){
+        for(int i = 0; i<3; i++){
+            colors[i]=rand()%255+1; 
+        }
+    }
+    
+    array <int, 3> getColor(){
+        return colors; 
+    }
+        
     
     void setCircle(Circle *c2){
             this-> c = c2;
