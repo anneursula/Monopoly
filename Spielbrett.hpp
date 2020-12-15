@@ -22,23 +22,7 @@ class Spielbrett {
         SVG *brett =nullptr; 
 
     public:
-    
-        /*
-        //Brauchen wir den Konstruktor überhaupt? Wir wollen doch immer mit Anzahl konstruieren
-        Spielbrett(){
-            
-            //bin mir hier nicht sicher, ob ein SVG zu viel erstellt wird. Vielleicht irgendwie mit Referenzen arbeiten.
-            brett = SVG(1000,1000);
-            anzahl = 0; 
-            width = 500; 
-            height = 500;
-            this-> straßen = straßen;
-            this->spieler = spieler;
-            
-            buildBrett();
-            setzeSpieler();
-            }*/
-
+  
         Spielbrett(int anzahl, SVG *brett){
             this-> brett = brett;
             this->anzahl = anzahl;
@@ -138,10 +122,7 @@ class Spielbrett {
 //             }
 //         }
     
-        // Methode besser in Klasse Spieler
-        int wuerfeln(){
-          return ((rand() % 6) + 1);  
-        }
+  
 
         void laufen(Spieler &spieler, int i){
             int altesFeld = spieler.getFeldPos();

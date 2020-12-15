@@ -26,6 +26,10 @@ class Spieler{
             this-> c = c2;
         }
     
+    int wuerfeln(){
+        return rand()%6 + 1; 
+    }
+    
    
     double getKapital(){
         return kapital;
