@@ -9,7 +9,8 @@ class Spieler{
     double kapital;
     list<Straße> straßen; //sollte dass dann auch eine Pointer list sein? Glaube schon :D 
     int feldPos;
-    array <int, 3> colors = {0,0,0}; 
+    //array <string, 4> colors = {"red", "blue", "yellow", "orange"};
+    string color;
     
     //die Form auf dem Spielfeld
     Circle *c = nullptr;
@@ -25,15 +26,13 @@ class Spieler{
         this->name = name; 
     }
     
-    void setColor(){
-        for(int i = 0; i<3; i++){
-            colors[i]=rand()%255+1; 
-        }
+    void setColor(string s){
+        color = s;
     }
     
-    array <int, 3> getColor(){
-        return colors; 
-    }
+//     array <int, 3> getColor(){
+//         return colors; 
+//     }
         
     
     void setCircle(Circle *c2){
@@ -80,9 +79,11 @@ class Spieler{
     
     
     void straßeKaufen(Straße &straße){
-        //in main checken, ob Straße vergeben ist
              straßen.push_front(straße);
              straße.setVerkauft(true);
+        
+        //Änderung 1
+        straße.getRect()->setFill(this->color);
     }   
     
     bool kaufenMoeglich(Straße &straße){
@@ -90,7 +91,7 @@ class Spieler{
     }
     
     bool mieteZahlenMoeglich(Straße &straße){
-        return false;
+        return (this->kapital > straße.getMiete());
     }
     
     bool besitzeStraße(Straße &str){
@@ -100,5 +101,9 @@ class Spieler{
             }
         }
         return false;
+    }
+    
+    //DESTRUKTOR
+    ~Spieler(){
     }
 };

@@ -20,6 +20,12 @@ class Spielbrett {
         int anzahl; 
         list<Spieler*> spieler;
         SVG *brett =nullptr; 
+        int koord[20][2] ={{0,0}, {0,100},{0,200},{0,300},{0,400}, {0,500},
+                               {100,500},{200,500},{300,500},{400,500},{500,500},
+                               {500,400},{500,300},{500,200},{500,100},{500,0},
+                               {400,0},{300,0},{200,0},{100,0}};
+    
+        array <string, 4> colors = {"red", "blue", "yellow", "orange"}; 
 
     public:
   
@@ -28,77 +34,33 @@ class Spielbrett {
             this->anzahl = anzahl;
             width = 500; 
             height = 500;
-            feldArrayInitialisieren();
-           // buildBrett();
             straßenInitialisieren();
             spielerInitialisieren();
             }
     
-        int getWidth(){
-            return width; 
-            }
+        
     
-        int getHeight(){
-            return height;
-            }
-
-    
-        void feldArrayInitialisieren(){
-            //SWITCH CASE EINBAUEN?
-            
-            //das feld 2D Array durchlaufen und in erste Koordinate x Koordinate des Felds Nummer = Index
-            // in zweiter Koordinate y Koordinate des Felds Nummer = Index.
-            int x = 1;
-            int k = 2;
-            int m = 2;
-            for(int i = 0; i < 20; i++){
-                            if(i<6){
-                                //x bleibt gleich y wird konstant höher
-                                feld[i][0] = 0;
-                                feld[i][1] = i* 100;
-                            }
-
-                            else if(i<11){
-
-                                //y bleibt gleich, x wird konstant höher
-                                feld[i][1]= 300;
-                                feld[i][0] = x*100;
-                                x++;
-                            }
-                            else if(i<16){
-                                //x bleibt gleich, y konstant kleiner
-                                feld[i][0] = 300;
-                                feld[i][1] = k*100;
-                                k--;
-                            }else{
-                                //y bleibt gleich, x konstant niedriger
-                                feld[i][1] = 0;
-                                feld[i][0] = m*100;
-                                m--;
-                            }
-                        }
-        }
-    
+       
         void spielerInitialisieren(){
             Spieler *spielerZeiger = nullptr;
                 for(int i = 0; i <anzahl;i++){
                     string s = "Spieler_" + to_string(i);
                     spielerZeiger = new Spieler(s);
                     Circle *c2 = new Circle(10 + 15 * i,10,10,brett);
-                    spielerZeiger->setColor();
-                    c2->setFill(spielerZeiger->getColor()[0], spielerZeiger->getColor()[1],spielerZeiger->getColor()[2]);
+                    spielerZeiger->setColor(colors[i]);
+                    c2->setFill(colors[i]);
                     spielerZeiger -> setCircle(c2);
                     spieler.push_front(spielerZeiger);
                     
                 }
             }
     
-        void straßenInitialisieren(){
+     
+    
+        
+           void straßenInitialisieren(){
             //x und Y Koordinaten 
-            int koord[20][2] ={{0,0}, {0,100},{0,200},{0,300},{0,400}, {0,500},
-                               {100,500},{200,500},{300,500},{400,500},{500,500},
-                               {500,400},{500,300},{500,200},{500,100},{500,0},
-                               {400,0},{300,0},{200,0},{100,0}};
+            
            
             //Mein Spielbrett ist gerade nur 12 groß...
             string namen[20] = {"OLD KENT ROAD", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
@@ -121,24 +83,16 @@ class Spielbrett {
             }
         }
       
-        //hier drin die Positionen der Straßen und Spieler setzen!
-    //Brauchen wir nicht mehr wegen den Rects :)
-//         void buildBrett(){   
-//             for(int i= 0; i < 12; i++){
-//                 brett->drawRect(feld[i][0], feld[i][1], 100,100);
-//             }
-//         }
-    
-  
+
 
         void laufen(Spieler &spieler, int i){
             int altesFeld = spieler.getFeldPos();
             // i ist was gewürfelt wurde. 12 weil wir 12 Felder haben -> kann man noch in Variable speichern.
-            int neuesFeld = (altesFeld + i) % 12;
+            int neuesFeld = (altesFeld + i) % 20;
             spieler.setFeldPos(neuesFeld);
             //x und y Koordinaten von neuem Feld herausfinden:
-            int x = feld[neuesFeld][0];
-            int y = feld[neuesFeld][1];
+            int x = koord[neuesFeld][0];
+            int y = koord[neuesFeld][1];
             Circle *c = spieler.getCircle();
             //bewegt Spieler (als Circle) zu neuen Koordinaten. Ist noch nicht so schön weil auf Linie).
             c->moveTo(x + 50 + rand()%20 + 1, y + 50 + rand()%20 + 1);
@@ -153,5 +107,27 @@ class Spielbrett {
             return straßen[pos];
         }
     
+    
+    int getWidth(){
+            return width; 
+            }
+    
+        int getHeight(){
+            return height;
+            }
           
+    //DESTRUKTOR
+    void deleteSpielerStraßen(){
+        for(Spieler* s:spieler){
+            delete (s->getCircle());
+            delete s;
+        }
+        for(int i = 0; i < 20; i++){
+            delete (straßen[i]->getRect());
+            delete straßen[i];
+        }
+    }
+    
+    
+
 };

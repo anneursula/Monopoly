@@ -8,12 +8,12 @@ using namespace std;
 class Straße {
     private:
     
-        string Name;
+        string name;
          
         //nicht veraendlich -> konstane machen
-        int Miete; 
+        int miete; 
         bool verkauft; 
-        bool Hypothek; 
+        bool hypothek; 
         int posX; 
         int posY;
         string color; 
@@ -22,25 +22,15 @@ class Straße {
         
     
     public:    
-    
-//         Straße(){
-//             Name = ""; 
-//             Miete = 0; 
-//             posX = 0; 
-//             posY = 0; 
-//             verkauft = false; 
-//             Hypothek = false; 
-//             color = "black";
 
-//         }   
        
         Straße(string name, int miete){
-            this->Name = name;
-            this->Miete = miete;
+            this->name = name;
+            this->miete = miete;
             posX = 0; 
             posY = 0; 
             verkauft = false; 
-            Hypothek = false; 
+            hypothek = false; 
             color = "black";
         }
     
@@ -59,19 +49,19 @@ class Straße {
     
    
         void setName(string name) {
-            this->Name = name;
+            this->name = name;
         }
 
         string getName() {
-            return Name;
+            return name;
         }
 
         void setMiete(int miete){
-            this->Miete = miete;
+            this->miete = miete;
         }
 
         int getMiete(){
-            return Miete;
+            return miete;
         }
 
         void setVerkauft(bool verkauft){
@@ -83,11 +73,15 @@ class Straße {
         }
 
         void setHypothek(bool hypothek){
-            this->Hypothek = hypothek;
+            this->hypothek = hypothek;
         }
 
         bool getHypothek(){
-            return Hypothek;
+            return hypothek;
+        }
+    
+        //DESTRUKTOR
+        ~Straße(){
         }
     
 };
