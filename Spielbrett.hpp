@@ -14,9 +14,9 @@ class Spielbrett {
         int height;
 
         //Ist spielfeld. erste Dim gibt an, welches Feld. 2. Dim x und y Koordinaten
-        int feld[12][2];
+        int feld[20][2];
         //Array für Straßen. Index gibt an welches Feld es ist.
-        Straße* straßen[12];
+        Straße* straßen[20];
         int anzahl; 
         list<Spieler*> spieler;
         SVG *brett =nullptr; 
@@ -51,21 +51,21 @@ class Spielbrett {
             int x = 1;
             int k = 2;
             int m = 2;
-            for(int i = 0; i < 12; i++){
-                            if(i<4){
+            for(int i = 0; i < 20; i++){
+                            if(i<6){
                                 //x bleibt gleich y wird konstant höher
                                 feld[i][0] = 0;
                                 feld[i][1] = i* 100;
                             }
 
-                            else if(i<7){
+                            else if(i<11){
 
                                 //y bleibt gleich, x wird konstant höher
                                 feld[i][1]= 300;
                                 feld[i][0] = x*100;
                                 x++;
                             }
-                            else if(i<10){
+                            else if(i<16){
                                 //x bleibt gleich, y konstant kleiner
                                 feld[i][0] = 300;
                                 feld[i][1] = k*100;
@@ -95,17 +95,22 @@ class Spielbrett {
     
         void straßenInitialisieren(){
             //x und Y Koordinaten 
-            int koord[12][2] ={{0,0}, {0,100},{0,200},{0,300},{100,300},{200,300},{300,300},{300,200},{300,100},{300,0},{200,0},{100,0}};
+            int koord[20][2] ={{0,0}, {0,100},{0,200},{0,300},{0,400}, {0,500},
+                               {100,500},{200,500},{300,500},{400,500},{500,500},
+                               {500,400},{500,300},{500,200},{500,100},{500,0},
+                               {400,0},{300,0},{200,0},{100,0}};
            
             //Mein Spielbrett ist gerade nur 12 groß...
-            string namen[12] = {"OLD KENT ROAD", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
+            string namen[20] = {"OLD KENT ROAD", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
                          "EUSTON ROAD", "PENTONVILLE ROAD", "PALL MALL", 
                          "WHITEHALL", "FLEET STREET", "LEICESTER SQUARE", 
-                         "PICADILLY ROAD", "OXFORD STREET", "BOND STREET"};
-            int len = 12;
+                         "PICCADILLY ROAD", "OXFORD STREET", "BOND STREET", 
+                          "BOW STREET", "VINE STREET", "THE STRAND", "MAYFAIR",
+                          "ELECTRIC COMPANY", "WATER WORKS", "LIVERPOOL STREET STATION", "MARYLEBONE STATION"};
+            int len = 20;
             Straße *straßenZeiger=nullptr;
             int miete = 10;
-            for(int i = 0; i < 12; i++){
+            for(int i = 0; i < 20; i++){
                 //i als Argument entspricht der Feldposition
                 straßenZeiger = new Straße(namen[i], miete);
                 Rect *r2= new Rect(koord[i][0],koord[i][1],100,100,brett);
