@@ -7,9 +7,9 @@ class Spieler{
     private:
     string name;
     double kapital;
-    list<Straße> straßen; //sollte dass dann auch eine Pointer list sein? Glaube schon :D 
+    //mit nem vector kann man einfacher auf elemente zugreifen (in der theorie zumindest)
+    vector <Straße*> straßen; 
     int feldPos;
-    //array <string, 4> colors = {"red", "blue", "yellow", "orange"};
     string color;
     
     //die Form auf dem Spielfeld
@@ -30,10 +30,6 @@ class Spieler{
         color = s;
     }
     
-//     array <int, 3> getColor(){
-//         return colors; 
-//     }
-        
     
     void setCircle(Circle *c2){
             this-> c = c2;
@@ -79,7 +75,7 @@ class Spieler{
     
     
     void straßeKaufen(Straße &straße){
-             straßen.push_front(straße);
+             straßen.push_back(&straße);
              straße.setVerkauft(true);
         
         //Änderung 1
@@ -87,7 +83,8 @@ class Spieler{
     }   
     
     bool kaufenMoeglich(Straße &straße){
-        return kapital >= straße.getMiete();
+         return kapital >= straße.getMiete();
+
     }
     
     bool mieteZahlenMoeglich(Straße &straße){
@@ -95,13 +92,31 @@ class Spieler{
     }
     
     bool besitzeStraße(Straße &str){
-        for(Straße eigeneStr: straßen){
-            if(eigeneStr.getName()==str.getName()){
+        for(Straße *eigeneStr: straßen){
+            if(eigeneStr->getName()==str.getName()){
                 return true;
             }
         }
         return false;
     }
+    
+    bool HypothekAufnehmen(Straße &str){
+        if(str.getHypothek() == false){
+            this->mieteErhalten(str.getMiete());
+            str.setHypothek(true); 
+            str.getRect()->setFill("transparent");
+            return true;
+            }
+        else{
+            return false; 
+        }
+    }
+       
+    vector<Straße*> getStreets(){
+        return straßen; 
+    }
+        
+        
     
     //DESTRUKTOR
     ~Spieler(){
