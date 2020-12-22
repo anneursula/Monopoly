@@ -45,8 +45,6 @@ class Straße {
         void setColor(string color){
             this->color = color; 
         }
-    
-    
    
         void setName(string name) {
             this->name = name;

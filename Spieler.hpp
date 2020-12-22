@@ -75,8 +75,9 @@ class Spieler{
     
     
     void straßeKaufen(Straße &straße){
-             straßen.push_back(&straße);
-             straße.setVerkauft(true);
+        straßen.push_back(&straße);
+        straße.setVerkauft(true);
+        kapital = kapital - straße.getMiete();
         
         //Änderung 1
         straße.getRect()->setFill(this->color);
@@ -111,8 +112,17 @@ class Spieler{
             return false; 
         }
     }
+    
+    void HypothekAufloesen(Straße &str){
+        if(str.getHypothek() == true){
+            kapital = kapital-str.getMiete(); 
+            str.setHypothek(false); 
+            str.getRect()->setFill(this->color); 
+        }
+    }
+            
        
-    vector<Straße*> getStreets(){
+    vector <Straße*> getStreets(){
         return straßen; 
     }
         
