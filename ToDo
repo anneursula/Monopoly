@@ -9,4 +9,12 @@ ToDo Liste
       - äh ja. noch nicht angefangen
       
 - Verhandlungen einbauen? ist im echten spiel möglich...
-      
+
+- Ereignisfelder - Kartenklasse
+- Gefängnis
+- Über Los gehen
+- 2 Würfel
+
+- Straßennamen
+- hasNeighbour()
+- Straße -> 4 Rect() als Häuser
