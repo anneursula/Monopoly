@@ -62,22 +62,25 @@ class Spieler{
         this->feldPos = pos;
     }
     
-    void mieteZahlen(Spieler &spieler, double miete){
-        if(miete <= kapital){
-            spieler.mieteErhalten(miete);
-            kapital = kapital - miete;
+    void mieteZahlen(Spieler &spieler, Straße &straße){
+        if(straße.getHypothek() == false){
+            if(straße.getMiete() <= kapital){
+                spieler.mieteErhalten(straße.getMiete());
+                kapital = kapital - straße.getMiete();
+            }
         }
+
     }
     
     void mieteErhalten(double miete){
-        kapital = kapital + miete;
+        this->kapital = this->kapital + miete;
     }
     
     
     void straßeKaufen(Straße &straße){
         straßen.push_back(&straße);
         straße.setVerkauft(true);
-        kapital = kapital - straße.getMiete();
+        this->kapital = this->kapital - straße.getMiete();
         
         //Änderung 1
         straße.getRect()->setFill(this->color);
@@ -114,11 +117,10 @@ class Spieler{
     }
     
     void HypothekAufloesen(Straße &str){
-        if(str.getHypothek() == true){
-            kapital = kapital-str.getMiete(); 
-            str.setHypothek(false); 
-            str.getRect()->setFill(this->color); 
-        }
+        kapital = kapital-str.getMiete(); 
+        str.setHypothek(false); 
+        str.getRect()->setFill(this->color); 
+        
     }
             
        
