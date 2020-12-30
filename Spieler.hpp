@@ -127,6 +127,18 @@ class Spieler{
     vector <Straße*> getStreets(){
         return straßen; 
     }
+    
+    vector <Straße*> getStreetsHypothek(){
+        
+        vector <Straße*> straßenHypothek;
+        
+        for(Straße *str: straßen){
+                if(str->getHypothek()){
+                    straßenHypothek.push_back(str);
+                }
+            }
+        return straßenHypothek;
+    }
         
         
     
