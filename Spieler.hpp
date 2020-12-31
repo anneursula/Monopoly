@@ -117,7 +117,7 @@ class Spieler{
     }
     
     void HypothekAufloesen(Straße &str){
-        kapital = kapital-str.getMiete(); 
+        this->kapital = this->kapital - str.getMiete(); 
         str.setHypothek(false); 
         str.getRect()->setFill(this->color); 
         

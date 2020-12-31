@@ -25,6 +25,13 @@ class Spielbrett {
                                {500,400},{500,300},{500,200},{500,100},{500,0},
                                {400,0},{300,0},{200,0},{100,0}};
     
+        string namen[20] = {"LOS", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
+                         "EUSTON ROAD", "PENTONVILLE ROAD", "PALL MALL", 
+                         "WHITEHALL", "FLEET STREET", "LEICESTER SQUARE", 
+                         "PICCADILLY ROAD", "OXFORD STREET", "BOND STREET", 
+                          "BOW STREET", "VINE STREET", "THE STRAND", "MAYFAIR",
+                          "ELECTRIC COMPANY", "WATER WORKS", "LIVERPOOL STREET", "MARYLEBONE STATION"};
+    
         array <string, 4> colors = {"red", "blue", "yellow", "orange"}; 
 
     public:
@@ -56,23 +63,14 @@ class Spielbrett {
             }
     
      
-    
         
            void straßenInitialisieren(){
             //x und Y Koordinaten 
             
-           
-            //Mein Spielbrett ist gerade nur 12 groß...
-            string namen[20] = {"OLD KENT ROAD", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
-                         "EUSTON ROAD", "PENTONVILLE ROAD", "PALL MALL", 
-                         "WHITEHALL", "FLEET STREET", "LEICESTER SQUARE", 
-                         "PICCADILLY ROAD", "OXFORD STREET", "BOND STREET", 
-                          "BOW STREET", "VINE STREET", "THE STRAND", "MAYFAIR",
-                          "ELECTRIC COMPANY", "WATER WORKS", "LIVERPOOL STREET STATION", "MARYLEBONE STATION"};
             int len = 20;
             Straße *straßenZeiger=nullptr;
             int miete = 10;
-            for(int i = 0; i < 20; i++){
+            for(int i = 1; i < 20; i++){
                 //i als Argument entspricht der Feldposition
                 straßenZeiger = new Straße(namen[i], miete);
                 Rect *r2= new Rect(koord[i][0],koord[i][1],100,100,brett);
@@ -81,21 +79,37 @@ class Spielbrett {
                 miete= miete +5;
                 straßen[i] = straßenZeiger;
             }
+               
+            straßenZeiger = new Straße(namen[0], 0); 
+            Rect *r = new Rect(koord[0][0],koord[0][1], 100, 100, brett); 
+            r->setFill("purple"); 
+            straßenZeiger -> setRect(r); 
+            straßen[0] = straßenZeiger; 
+               
+            for(int i = 0; i<20; i++){
+                brett->drawText(namen[i], koord[i][0]+5, koord[i][1]+50, 8); 
+            }
+            
         }
-      
 
 
         void laufen(Spieler &spieler, int i){
             int altesFeld = spieler.getFeldPos();
-            // i ist was gewürfelt wurde. 12 weil wir 12 Felder haben -> kann man noch in Variable speichern.
             int neuesFeld = (altesFeld + i) % 20;
+            
             spieler.setFeldPos(neuesFeld);
             //x und y Koordinaten von neuem Feld herausfinden:
             int x = koord[neuesFeld][0];
             int y = koord[neuesFeld][1];
+            
             Circle *c = spieler.getCircle();
             //bewegt Spieler (als Circle) zu neuen Koordinaten. Ist noch nicht so schön weil auf Linie).
             c->moveTo(x + 50 + rand()%20 + 1, y + 50 + rand()%20 + 1);
+            
+            // checken, ob man über LOS gegangen ist 
+            if(altesFeld+i>20){
+                spieler.mieteErhalten(100); 
+            }
         }
         
         
