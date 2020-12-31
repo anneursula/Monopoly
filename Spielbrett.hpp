@@ -28,7 +28,7 @@ class Spielbrett {
         string namen[20] = {"LOS", "WHITECHAPEL ROAD", "KINGS CROSS STATION", 
                          "EUSTON ROAD", "PENTONVILLE ROAD", "PALL MALL", 
                          "WHITEHALL", "FLEET STREET", "LEICESTER SQUARE", 
-                         "PICCADILLY ROAD", "OXFORD STREET", "BOND STREET", 
+                         "OXFORD STREET", "PRISON", "BOND STREET", 
                           "BOW STREET", "VINE STREET", "THE STRAND", "MAYFAIR",
                           "ELECTRIC COMPANY", "WATER WORKS", "LIVERPOOL STREET", "MARYLEBONE STATION"};
     
@@ -44,10 +44,8 @@ class Spielbrett {
             straßenInitialisieren();
             spielerInitialisieren();
             }
+
     
-        
-    
-       
         void spielerInitialisieren(){
             Spieler *spielerZeiger = nullptr;
                 for(int i = 0; i <anzahl;i++){
@@ -62,7 +60,6 @@ class Spielbrett {
                 }
             }
     
-     
         
            void straßenInitialisieren(){
             //x und Y Koordinaten 
@@ -71,6 +68,7 @@ class Spielbrett {
             Straße *straßenZeiger=nullptr;
             int miete = 10;
             for(int i = 1; i < 20; i++){
+                if(i!=10){
                 //i als Argument entspricht der Feldposition
                 straßenZeiger = new Straße(namen[i], miete);
                 Rect *r2= new Rect(koord[i][0],koord[i][1],100,100,brett);
@@ -78,14 +76,24 @@ class Spielbrett {
                 straßenZeiger -> setRect(r2);
                 miete= miete +5;
                 straßen[i] = straßenZeiger;
+                }
             }
-               
+              
+               //LOS 
             straßenZeiger = new Straße(namen[0], 0); 
             Rect *r = new Rect(koord[0][0],koord[0][1], 100, 100, brett); 
             r->setFill("purple"); 
             straßenZeiger -> setRect(r); 
             straßen[0] = straßenZeiger; 
                
+               //GEFAENGNIS 
+            straßenZeiger = new Straße(namen[10], 0); 
+            Rect *r3 = new Rect(koord[10][0],koord[10][1], 100, 100, brett); 
+            r3->setFill("darkblue"); 
+            straßenZeiger -> setRect(r3); 
+            straßen[10] = straßenZeiger; 
+               
+               //Straßennamen auf das Feld zeichnen 
             for(int i = 0; i<20; i++){
                 brett->drawText(namen[i], koord[i][0]+5, koord[i][1]+50, 8); 
             }
@@ -109,6 +117,11 @@ class Spielbrett {
             // checken, ob man über LOS gegangen ist 
             if(altesFeld+i>20){
                 spieler.mieteErhalten(100); 
+            }
+            
+            // checken ob man im Gefängnis ist 
+            if(neuesFeld==10){
+                spieler.setImprisoned(true); 
             }
         }
         

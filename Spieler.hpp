@@ -11,6 +11,7 @@ class Spieler{
     vector <Straße*> straßen; 
     int feldPos;
     string color;
+    bool imprisoned; 
     
     //die Form auf dem Spielfeld
     Circle *c = nullptr;
@@ -20,6 +21,7 @@ class Spieler{
         this -> name = name;
         kapital = 400; //Welcher Betrag??
         feldPos = 0;
+        imprisoned = false; 
     }
     
     void setName(string name){
@@ -60,6 +62,14 @@ class Spieler{
     
     void setFeldPos(int pos){
         this->feldPos = pos;
+    }
+    
+    void setImprisoned(bool prison){
+        this->imprisoned = prison; 
+    }
+    
+    bool getImprisoned(){
+        return imprisoned; 
     }
     
     void mieteZahlen(Spieler &spieler, Straße &straße){
