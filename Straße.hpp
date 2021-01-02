@@ -9,21 +9,17 @@ class Straße {
     private:
     
         string name;
-         
-        //nicht veraendlich -> konstane machen
         int miete; 
         bool verkauft; 
         bool hypothek; 
         int posX; 
         int posY;
         string color; 
-    
+        //stellt die Straße als Rechteck auf dem Spielfeld da.
         Rect *r = nullptr;
-           //stellt die Häuser da
-//        vector <Haus*> *haeuser; 
+        //stellt die Häuser da
         Haus *haeuser[4] = {nullptr, nullptr, nullptr, nullptr};
-//        // array <Haus*, 4> *haeuser; 
-        
+
     
     public:    
 
@@ -33,13 +29,12 @@ class Straße {
             this->miete = miete;
             verkauft = false; 
             hypothek = false; 
-            color = "black";
             this->posX = posX;
             this->posY = posY;
             this->r= new Rect(posX,posY,100,100,brett);
             this ->r->setFill("green");
             
-            
+            //Häuser initialisieren
             for(int i = 0; i <4;i++){               
                 Haus *hausZeiger = new Haus(miete *(1/3));
                 haeuser[i] = hausZeiger;
@@ -47,9 +42,7 @@ class Straße {
                 r3->setFill("white");
                 haeuser[i] -> setRect(r3);
             }
-            
-  
-          }
+        }
         
     
        
@@ -98,27 +91,17 @@ class Straße {
             return hypothek;
         }
     
-    
-      
-//         void buildHouse(){
-//             bool b = true;
-//             for(int i = 0; (i<4)&&b;i++){
-//                if(!haeuser[i]->getBuilt()){
-                   
-//                    Rect *r3= new Rect(posX + (i*10),posY,10,10,brett);
-//                    haeuser[i] -> setRect(r3);
-//                    haeuser[i]->setBuilt(true);
-//                    haeuser[i]->getRect()->setFill("white");
-//                    b=false;
-//                    miete = miete *(1/4 * miete);
-//                }
-//             }
-//         }
-    
+        /*
+        gibt nächstes baufähige Haus zurück.
+        */
         Haus* getHouse(){
-          return haeuser[this->getAnzahlHaeuser()];  
+           return haeuser[this->getAnzahlHaeuser()];
         }
     
+    
+        /*
+        gibt an, wieviele Häuserschon gebaut wurden.
+        */
         int getAnzahlHaeuser(){
           int zaehler = 0;
           for(int i= 0;i<4;i++){
@@ -128,30 +111,7 @@ class Straße {
           }
             return zaehler;
         }
-    
-//         vector <Haus*>* getHaeuser(){
-//             return haeuser;
-//         }
-    
-// //         void initializeHaus(Haus *h, int stelle){
-// //             haeuser[stelle] = h;
-// //         }
-    
-//         int getAnzahlHaeuser(){
-            
-//              haeuser->front()->getBuilt();
-// //             for(int i = 0; i< 4; i++){
-// //               if(!(haeuser[i]->getBuilt())){
-// //                   return i;
-// //               }
-// //             }
-//         }
-    
-//         void addHouse(){
-//             int i = this->getAnzahlHaeuser();
-//             haeuser[i] = 
-//         }
-    
+       
         //DESTRUKTOR
         ~Straße(){
             delete r;

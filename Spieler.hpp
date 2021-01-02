@@ -6,16 +6,14 @@ class Spieler{
     
     private:
     string name;
-    double kapital;
-    //mit nem vector kann man einfacher auf elemente zugreifen (in der theorie zumindest)
+    int kapital;
+    //Alle Straßen des Spielers gesammelt in einem Vektor
     vector <Straße*> straßen; 
     int feldPos;
-   // string color;
-    //Color hierdring
+    //Color als RGB-Werte
     int color[3];
-    //die Form auf dem Spielfeld
+    //Der Circle stellt den Spieler auf dem Spielbrett da
     Circle *c = nullptr;
-    
     bool imprisoned;
     
     
@@ -23,9 +21,9 @@ class Spieler{
     public:
     Spieler(string name, SVG *brett, int color[], int pos){
         this -> name = name;
-        kapital = 400; //Welcher Betrag??
+        kapital = 400; //Anfangskapital
         feldPos = 0;
-        this->c= new Circle(pos,30,10,brett);
+        this->c= new Circle(pos,30,10,brett); //y-Werte und Radius festgelegt
         this->c->setFill(color[0],color[1],color[2]);
         this->color[0] = color[0];
         this->color[1] = color[1];
@@ -38,18 +36,15 @@ class Spieler{
         this->name = name; 
     }
     
-//     void setColor(string s){
-//         color = s;
-//     }
     
     
     void setCircle(Circle *c2){
             this-> c = c2;
         }
     
+    //würfel Zahl zwischen 1-6
     int wuerfeln(){
-//         return rand()%6 + 1;
-        return 5;
+         return rand()%6 + 1;
     }
     
    
@@ -62,7 +57,6 @@ class Spieler{
     }
     
     
-    //returne pointer auf Circle
     Circle* getCircle(){
         return c;
     }
@@ -83,6 +77,10 @@ class Spieler{
         return imprisoned; 
     }
     
+    /*
+    Miete Zahlen nur möglich, falls Straße nicht hypothek gesetzt ist und 
+    Spieler genug Kapital besitzt.
+    */
     void mieteZahlen(Spieler &spieler, Straße &straße){
         if(straße.getHypothek() == false){
             if(straße.getMiete() <= kapital){
@@ -93,19 +91,18 @@ class Spieler{
 
     }
     
-    void mieteErhalten(double miete){
+    void mieteErhalten(int miete){
         this->kapital = this->kapital + miete;
     }
     
-    
+    /*
+    Straße wird gekauft und nimmt die Farbe des Spielers an
+    */
     void straßeKaufen(Straße &straße){
         straßen.push_back(&straße);
         straße.setVerkauft(true);
         this->kapital = this->kapital - straße.getMiete();
-        
-        //Änderung 1
         straße.getRect()->setFill(color[0],color[1],color[2]);
-      //  straße.getRect()->setColor(this->color);
     }   
     
     bool kaufenMoeglich(Straße &straße){
@@ -117,6 +114,11 @@ class Spieler{
         return (this->kapital > straße.getMiete());
     }
     
+    
+    /*
+    Geht eigene Straßen durch und überprüft, ob Name gleich zu der 
+    übergebenen Straße
+    */
     bool besitzeStraße(Straße &str){
         for(Straße *eigeneStr: straßen){
             if(eigeneStr->getName()==str.getName()){
@@ -126,6 +128,10 @@ class Spieler{
         return false;
     }
     
+    /*
+    Straße wird hypothek gesetzt und Spieler erhält Wert der Straße.
+    Straße wird transparent.
+    */
     bool HypothekAufnehmen(Straße &str){
         if(str.getHypothek() == false){
             this->mieteErhalten(str.getMiete());
@@ -137,6 +143,7 @@ class Spieler{
             return false; 
         }
     }
+    
     
     void HypothekAufloesen(Straße &str){
         kapital = kapital-str.getMiete(); 
@@ -151,10 +158,11 @@ class Spieler{
     }
     
     
+    /*
+    Gibt die Straßen zurück, die Spieler hypothek gesetzt hat.
+    */
     vector <Straße*> getStreetsHypothek(){
-        
         vector <Straße*> straßenHypothek;
-        
         for(Straße *str: straßen){
                 if(str->getHypothek()){
                     straßenHypothek.push_back(str);
@@ -164,23 +172,28 @@ class Spieler{
     }
     
     
-        void buildHouse(Straße &str){
-            str.getHouse()->setBuilt(true);
-            //muss noch geändert werden
-            str.getHouse()->getRect()->setFill(color[0],color[1],color[2]);
-            bool b = true;
-            str.setMiete(str.getMiete() + str.getMiete() * (1/4));
+    /*
+    Methode zum Hausbau. Miete für Straße erhöht sich um 1/4.
+    Haus nimmt Farbe des Spielers an.
+    */
+      void buildHouse(Straße &str){
+          Haus *h = str.getHouse();
+          h->setBuilt(true);
+          h->getRect()->setFill(color[0],color[1],color[2]);
+          bool b = true;
+          str.setMiete(str.getMiete() + str.getMiete() * (1/4));
         }
     
-        bool hausbauMoeglich(Straße &str){
-           
+    
+    /*
+    Hausbau möglich, falls noch nicht 4 Häuser gebaut wurden und genug Kapital vorhanden ist.
+    */
+      bool hausbauMoeglich(Straße &str){           
            return ((str.getMiete()>str.getHouse()->getPreis())&&str.getAnzahlHaeuser() < 4); 
-        }
+       }
     
     
-        
-        
-    
+       
     //DESTRUKTOR
     ~Spieler(){
         delete c;
