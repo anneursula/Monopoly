@@ -63,26 +63,28 @@ class Spielbrett {
             Straße *straßenZeiger=nullptr;
             int miete = 10;
              //i entspricht der Feldposition
-            for(int i = 1; i < 20; i++){
-                straßenZeiger = new Straße(namen[i], miete, koord[i][0],koord[i][1],brett);
-                miete= miete +5;
-                straßen[i] = straßenZeiger;
-               
+            for(int i = 1; i < len; i++){
+                if(i!=10){
+                    straßenZeiger = new Straße(namen[i], miete, koord[i][0],koord[i][1],brett);
+                    miete= miete +5;
+                    straßen[i] = straßenZeiger;
+                    }
+            }
              //LOS Feld
             straßenZeiger = new Straße(namen[0], 0, koord[0][0],koord[0][1],brett);
-            straßenZeiger->getRect()->setFill("purple"); 
+            straßenZeiger->getRect()->setFill("lightgreen"); 
             straßen[0] = straßenZeiger; 
                
             //GEFAENGNIS Feld 
             straßenZeiger = new Straße(namen[10], 0,koord[10][0],koord[10][1],brett);
-            straßenZeiger->getRect()->setFill("darkblue"); 
+            straßenZeiger->getRect()->setFill("red"); 
             straßen[10] = straßenZeiger; 
                
              //Straßennamen auf das Feld zeichnen 
             for(int i = 0; i<20; i++){
                 brett->drawText(namen[i], koord[i][0]+5, koord[i][1]+50, 8); 
             }
-           }
+           
         }
     
 

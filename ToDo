@@ -1,20 +1,12 @@
 ToDo Liste
 
 - Möglichkeit hinzufügen, Hypothek aufzunehmen
-      - Farbe der Straßewird transparenter (bisher wirds einfach nur weiß, aber das transparenter wär schöner) 
-      
-      - gucken, dass nur Miete gezahlt wird wenn Karte nicht hypothek
-
-- Haus Klasse
-      - äh ja. noch nicht angefangen
+      - Farbe der Straße wird transparenter (bisher wirds einfach nur weiß, aber das transparenter wär schöner) 
       
 - Verhandlungen einbauen? ist im echten spiel möglich...
 
 - Ereignisfelder - Kartenklasse
-- Gefängnis
-- Über Los gehen
+
 - 2 Würfel
 
-- Straßennamen
 - hasNeighbour()
-- Straße -> 4 Rect() als Häuser

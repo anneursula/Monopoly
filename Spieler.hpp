@@ -48,7 +48,7 @@ class Spieler{
     }
     
    
-    double getKapital(){
+    int getKapital(){
         return kapital;
     }
     
